@@ -20,7 +20,7 @@ public class Publisher {
 		{
 				prop.load(inputProp);
 		ConnectionFactory factory = new ConnectionFactory();
-		factory.setUri("amqp://iamtest:Admin123@localhost:5672/myvhost");
+		factory.setUri(prop.getProperty("RABBITMQ.HOST"));
 		Connection connection = factory.newConnection();
 		Channel channel = connection.createChannel();
 		channel.queueDeclare(prop.getProperty("TASK_QUEUE_NAME"), true, false, false, null);
