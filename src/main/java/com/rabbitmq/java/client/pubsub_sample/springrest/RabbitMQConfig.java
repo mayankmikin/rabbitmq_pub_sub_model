@@ -7,8 +7,8 @@ import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
@@ -99,13 +99,13 @@ public class RabbitMQConfig {
 	}
 
 	@Bean
-	DirectExchange exchange() {
+	TopicExchange exchange() {
 		System.out.println("exchange is: "+exchange);
-		return new DirectExchange(exchange);
+		return new TopicExchange(exchange);
 	}
 
 	@Bean
-	Binding binding(Queue queue, DirectExchange exchange) {
+	Binding binding(Queue queue, TopicExchange exchange) {
 		String routKey=routingkey+".*";
 		System.out.println("routingkey is: "+routKey);
 		return BindingBuilder.bind(queue).to(exchange).with(routKey);
