@@ -1,25 +1,23 @@
 package com.rabbitmq.java.client.pubsub_sample.springrest;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/employee/rabbitmq/")
+@RequestMapping(value = "/employee/rabbitmq")
 public class RabbitMQWebController {
 	@Autowired
-	RabbitMQSender rabbitMQSender;
+	private RabbitMQSender rabbitMQSender;
 
-	@GetMapping(value = "/producer")
-	public String producer(@RequestParam("empName") String empName,@RequestParam("empId") String empId) {
-	
-	Employee emp=new Employee();
-	emp.setEmpId(empId);
-	emp.setEmpName(empName);
-		rabbitMQSender.send(emp);
-
+	@PostMapping(value = "/producer")
+	public String producer(@Valid @RequestBody CustomMessage message) {
+		rabbitMQSender.send(message);
+		System.out.println(message);
 		return "Message sent to the RabbitMQ JavaInUse Successfully";
 	}
 }

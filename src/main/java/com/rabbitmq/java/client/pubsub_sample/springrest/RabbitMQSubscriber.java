@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 public class RabbitMQSubscriber {
 	
 	@RabbitListener(queues="${test.rabbitmq.queue}")
-    public void recievedMessage(Employee msg) {
+    public void recievedMessage(CustomMessage msg) {
         System.out.println("Recieved Message: " + msg);
     }
 }
